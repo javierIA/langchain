@@ -517,6 +517,44 @@ Constuir un sistema de búsqueda en basedatos de vectores
 
 
 
+---
+
+![bg left width:100%](../img/image.png)
+
+
+
+Los algoritmos ANN son la clave para la búsqueda de similitud a gran escala en bases de datos vectoriales.
+En lugar de encontrar el "vecino más cercano" exacto (que es computacionalmente costoso), los ANN encuentran una aproximación muy cercana en una fracción del tiempo.
+
+---
+
+
+Aquí tienes una diapositiva que explica cómo funcionan los algoritmos de Vecinos Más Cercanos Aproximados (ANN) en las bases de datos vectoriales para una búsqueda eficiente:
+
+---
+
+## **Búsqueda Eficiente de Documentos: Algoritmos ANN en Bases de Datos Vectoriales**
+
+---
+
+
+**¿Cómo Funcionan (Principios Clave)?**
+
+- Indexación Inteligente:
+    
+- Compromiso entre Precisión y Velocidad:
+   
+- Técnicas Comunes:
+    * Basados en Gráficos (ej. HNSW - Hierarchical Navigable Small World)
+    * Basados en Árboles (ej. KD-Trees, ANNOY):
+    * Basados en Hashing (ej. LSH - Locality Sensitive Hashing):
+    * Basados en Agrupamiento (ej. FAISS):
+
+
+---
+
+![alt text](image.png)
+
 
 ---
 

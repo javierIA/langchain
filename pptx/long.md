@@ -14,7 +14,7 @@ style: |
   .columns-row {
     display: grid;
     grid-template-columns: repeat(5, minmax(0, 1fr));
-    gap: 1rem;
+    gap: 2rem;
   }
   .highlight {
     background: linear-gradient(45deg, #667eea 0%, #764ba2 100%);
@@ -36,7 +36,7 @@ style: |
     text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
   }
   .emoji {
-    font-size: 2em;
+    font-size: 1.5em;
   }
   .img {
     max-width: 100%;
@@ -171,10 +171,6 @@ style: |
 - Entity memory
 - Summary memory
 
-### **🤖 Agents**
-- Reasoning engines
-- Tool selection
-- Dynamic workflows
 
 </div>
 <div>
@@ -188,6 +184,27 @@ style: |
 - Document search
 - Vector similarity
 - Hybrid search
+
+
+
+</div>
+</div>
+
+---
+
+<div class="columns">
+<div>
+
+
+
+### **🤖 Agents**
+- Reasoning engines
+- Tool selection
+- Dynamic workflows
+
+</div>
+<div>
+
 
 ### **🔧 Tools**
 - External APIs
@@ -355,27 +372,6 @@ transform = TransformChain(
 <strong>La memoria permite que las aplicaciones mantengan contexto entre interacciones</strong>
 </div>
 
-```python
-from langchain.memory import ConversationBufferMemory
-from langchain.memory import ConversationSummaryBufferMemory
-from langchain_community.memory import PostgresChatMessageHistory
-
-# Memory básica
-memory = ConversationBufferMemory(return_messages=True)
-
-# Memory con resumen inteligente
-summary_memory = ConversationSummaryBufferMemory(
-    llm=llm,
-    max_token_limit=2000,
-    return_messages=True
-)
-
-# Memory persistente
-persistent_memory = PostgresChatMessageHistory(
-    connection_string="postgresql://user:pass@localhost/db",
-    session_id="user-session-123"
-)
-```
 
 ---
 
@@ -389,170 +385,18 @@ persistent_memory = PostgresChatMessageHistory(
 <div class="code-block">
 
 ```python
-from langchain.agents import create_openai_tools_agent
-from langchain_community.tools import DuckDuckGoSearchRun
-from langchain.agents import AgentExecutor
-
 # Definir herramientas
 tools = [
     DuckDuckGoSearchRun(),
-    # Más herramientas personalizadas...
 ]
 
 # Crear el agent
 agent = create_openai_tools_agent(llm, tools, prompt)
-executor = AgentExecutor(agent=agent, tools=tools, verbose=True)
 
-# Ejecutar
-resultado = executor.invoke({
-    "input": "Encuentra las últimas tendencias en IA empresarial 2025"
-})
 ```
 
 </div>
 
----
-
-## 🔍 RAG: Retrieval Augmented Generation
-
-### **El Patrón más Importante para Empresas**
-
-<div class="columns">
-<div>
-
-### **¿Qué es RAG?**
-- Combina **recuperación** + **generación**
-- Acceso a datos específicos
-- Respuestas contextualizadas
-- Reduce alucinaciones
-
-### **Casos de Uso:**
-- Knowledge bases empresariales
-- Documentación técnica
-- Análisis de contratos
-- Soporte al cliente
-
-</div>
-<div>
-
-### **Arquitectura RAG:**
-```mermaid
-graph TD
-    A[Query] --> B[Retriever]
-    B --> C[Vector Store]
-    C --> D[Relevant Docs]
-    D --> E[Prompt + Context]
-    E --> F[LLM]
-    F --> G[Contextualized Answer]
-```
-
-</div>
-</div>
-
----
-
-## 📊 Implementación RAG Empresarial
-
-<div class="code-block">
-
-```python
-from langchain_community.document_loaders import DirectoryLoader
-from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain_openai import OpenAIEmbeddings
-from langchain_community.vectorstores import Chroma
-from langchain.chains import RetrievalQA
-
-# 1. Cargar documentos
-loader = DirectoryLoader('./docs', glob="**/*.pdf")
-docs = loader.load()
-
-# 2. Dividir texto
-splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=200)
-splits = splitter.split_documents(docs)
-
-# 3. Crear vector store
-embeddings = OpenAIEmbeddings(model="text-embedding-3-large")
-vectorstore = Chroma.from_documents(splits, embeddings)
-
-# 4. Crear RAG chain
-qa_chain = RetrievalQA.from_chain_type(
-    llm=llm,
-    retriever=vectorstore.as_retriever(search_kwargs={"k": 5}),
-    return_source_documents=True
-)
-```
-
-</div>
-
----
-
-## 🎨 LangGraph: Workflows Avanzados
-
-### **La Nueva Generación de Workflows (2025)**
-
-<div class="highlight">
-<strong>LangGraph permite crear aplicaciones de IA con flujos de trabajo complejos y estados persistentes</strong>
-</div>
-
-```python
-from langgraph.graph import StateGraph, END
-from typing import TypedDict
-
-class AgentState(TypedDict):
-    messages: list
-    current_step: str
-    analysis_complete: bool
-
-# Crear el grafo
-workflow = StateGraph(AgentState)
-
-# Añadir nodos
-workflow.add_node("analyze", analyze_function)
-workflow.add_node("research", research_function)
-workflow.add_node("synthesize", synthesize_function)
-
-# Definir flujo
-workflow.set_entry_point("analyze")
-workflow.add_edge("analyze", "research")
-workflow.add_conditional_edges("research", should_continue, {"continue": "synthesize", "end": END})
-```
-
----
-
-## 🚀 Casos de Uso Empresariales
-
-<div class="columns">
-<div>
-
-### **💼 Automatización**
-- Generación de reportes
-- Análisis de documentos
-- Procesamiento de emails
-- Workflow automation
-
-### **🎯 Atención al Cliente**
-- Chatbots inteligentes
-- Escalamiento automático
-- Base de conocimiento
-- Análisis de sentimientos
-
-</div>
-<div>
-
-### **📊 Análisis de Datos**
-- Business intelligence
-- Insights automáticos
-- Predicciones de mercado
-- Risk assessment
-
-### **🔒 Compliance**
-- Revisión de contratos
-- Auditoría automática
-- Detección de riesgos
-- Reportes regulatorios
-
-</div>
-</div>
 
 ---
 
@@ -569,89 +413,17 @@ workflow.add_conditional_edges("research", should_continue, {"continue": "synthe
 - A/B testing
 - Cost optimization
 
-### **🌐 LangServe**
-- API deployment
-- Scaling automático
-- Load balancing
-- Health monitoring
 
 </div>
-<div>
 
-### **📊 LangFuse**
-- Open-source observability
-- Custom metrics
-- User analytics
-- Cost tracking
-
-### **🔐 LangChain Security**
-- Input validation
-- Output filtering
-- Rate limiting
-- Audit logging
-
-</div>
-</div>
 
 ---
 
-## 📈 Mejores Prácticas Empresariales
+## 🤔 ¿Preguntas?
 
-### **🎯 Diseño de Prompts**
-- Templates reutilizables
-- Versionado de prompts
-- Testing sistemático
-- Optimización continua
 
-### **🔒 Seguridad**
-- Validación de inputs
-- Sanitización de outputs
-- Control de acceso
-- Monitoreo de anomalías
-
-### **⚡ Performance**
-- Caching estratégico
-- Batch processing
-- Async operations
-- Resource management
-
-### **📊 Monitoring**
-- Métricas de calidad
-- Cost tracking
-- User feedback
-- System health
 
 ---
-
-## 🎓 Próximos Pasos
-
-<div class="highlight">
-<strong>Roadmap del Curso:</strong>
-</div>
-
-### **📅 Semana 1-2: Fundamentos**
-- Setup y configuración
-- Conceptos básicos
-- Primeros prototipos
-- Casos de uso simples
-
-### **📅 Semana 3-4: Desarrollo**
-- RAG implementation
-- Agent development
-- Memory systems
-- Tool integration
-
-### **📅 Semana 5-6: Producción**
-- Deployment strategies
-- Monitoring setup
-- Security implementation
-- Performance optimization
-
----
-
-## 💡 ¿Preguntas?
-
-<div class="emoji">🤔</div>
 
 ### **Recursos Adicionales:**
 - 📚 [Documentación oficial LangChain](https://docs.langchain.com)
@@ -659,10 +431,12 @@ workflow.add_conditional_edges("research", should_continue, {"continue": "synthe
 - 💬 [Community Discord](https://discord.gg/langchain)
 - 📺 [LangChain YouTube](https://youtube.com/@LangChain)
 
+
+--- 
+
 ### **Contacto del Instructor:**
-- 📧 Email: instructor@empresa.com
-- 💼 LinkedIn: /in/instructor-langchain
-- 🐦 Twitter: @LangChainExpert
+- 📧 Email: javier.flores@ia.center
+- 💼 LinkedIn: /in/xavierflorex2
 
 ---
 
@@ -672,4 +446,3 @@ workflow.add_conditional_edges("research", should_continue, {"continue": "synthe
 ### **Siguiente sesión:**
 **Instalación práctica y primer proyecto**
 
----

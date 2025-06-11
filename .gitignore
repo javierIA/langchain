@@ -1,2 +1,5 @@
 /.env
 /.venv
+/chroma
+/temec_db
+*.pyc

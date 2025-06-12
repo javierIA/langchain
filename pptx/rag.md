@@ -520,106 +520,6 @@ El reranking es como tener un "segundo experto" que revisa y reordena los result
 
 ---
 
-## 🌐 RAG como Servicio - Arquitectura Enterprise
-
-### **🏗️ Componentes de una API RAG Empresarial:**
-
-<div class="columns">
-<div>
-
-### **🔐 Capa de Seguridad**
-- **Autenticación**: JWT, OAuth 2.0
-- **Autorización**: RBAC granular
-- **Rate Limiting**: Por usuario/departamento
-- **Audit Logging**: Trazabilidad completa
-
-### **⚡ Capa de Performance**
-- **Caching**: Redis para respuestas frecuentes
-- **Load Balancing**: Distribución inteligente
-- **CDN**: Assets estáticos globales
-- **Connection Pooling**: Optimización BD
-
-</div>
-<div>
-
-### **🧠 Capa de Inteligencia**
-- **Query Classification**: Routing automático
-- **Context Adaptation**: Personalización por usuario
-- **Multi-tenant**: Aislamiento de datos
-- **A/B Testing**: Optimización continua
-
-### **📊 Capa de Observabilidad**
-- **Real-time Metrics**: Dashboards en vivo
-- **Distributed Tracing**: Debug de latencia
-- **Error Tracking**: Alertas proactivas
-- **Cost Attribution**: Por departamento/proyecto
-
-</div>
-</div>
-
-### **🚀 Endpoints Típicos de RAG Enterprise:**
-- `POST /query` - Consulta principal con contexto
-- `GET /health` - Health checks y métricas
-- `POST /feedback` - Recolección de feedback usuario
-- `GET /analytics` - Métricas de uso y performance
-- `POST /documents` - Ingesta de nuevos documentos
-- `DELETE /documents/{id}` - Gestión de contenidostatus_code=500, detail=str(e))
-
-if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=8000)
-```
-
-</div>
-
----
-
-## 🔒 Seguridad y Compliance
-
-<div class="warning">
-<strong>Consideraciones Críticas para Empresas:</strong>
-</div>
-
-<div class="columns">
-<div>
-
-### **🛡️ Seguridad de Datos**
-- Encriptación en reposo y tránsito
-- Control de acceso granular
-- Auditoría de consultas
-- Anonimización de datos sensibles
-
-### **📋 Compliance**
-- GDPR/CCPA compliance
-- Retención de datos
-- Right to be forgotten
-- Data lineage tracking
-
-</div>
-<div>
-
-### **🔐 Best Practices**
-```python
-# Filtro de contenido sensible
-def sanitize_query(query):
-    sensitive_patterns = [
-        r'\b\d{4}-\d{4}-\d{4}-\d{4}\b',  # Tarjetas
-        r'\b\d{3}-\d{2}-\d{4}\b'         # SSN
-    ]
-    # Implementar filtrado
-    return cleaned_query
-
-# Control de acceso
-@app.middleware("http")
-async def check_permissions(request, call_next):
-    # Verificar permisos de usuario
-    return await call_next(request)
-```
-
-</div>
-</div>
-
----
-
 ## 💰 Optimización de Costos
 
 <div class="columns">
@@ -635,7 +535,6 @@ async def check_permissions(request, call_next):
 - Tokens por consulta
 - Costo por respuesta
 - Cache hit ratio
-- Latencia P95
 
 </div>
 <div>
@@ -678,13 +577,11 @@ main_llm = ChatOpenAI(
 1. Implementar RAG completo con documentos reales
 2. Optimizar para casos de uso específicos
 3. Desplegar como API funcional
-4. Implementar monitoring básico
 
 **Entregables:**
 - Código funcional con documentación
 - API desplegada y funcional
 - Dashboard de métricas
-- Informe de optimizaciones aplicadas
 
 
 
